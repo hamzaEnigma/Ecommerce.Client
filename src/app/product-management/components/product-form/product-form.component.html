@@ -1,0 +1,10 @@
+
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" style="margin-bottom: 20px;">
+  <input formControlName="productName" placeholder="Product Name" />
+  <input formControlName="UnitPrice" type="number" placeholder="Unit Price" />
+  <input formControlName="UnitsInStock" type="number" placeholder="Units In Stock" />
+  <button type="submit" [disabled]="productForm.invalid">
+    Add
+  </button>
+  <button type="button" (click)="onCancel()">Cancel</button>
+</form>
