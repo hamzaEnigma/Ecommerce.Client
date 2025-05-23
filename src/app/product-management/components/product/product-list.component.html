@@ -1,0 +1,30 @@
+<div class="container">
+    <h2>Product Management</h2>
+
+<app-product-form (save)="saveProduct($event)"></app-product-form>
+
+
+   <table border="1" cellpadding="8" cellspacing="0" >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Unit Price</th>
+        <th>Units In Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.ProductId }}</td>
+        <td>{{ product.productName }}</td>
+        <td>{{ product.UnitPrice  }}</td>
+        <td>{{ product.UnitsInStock }}</td>
+        <td>
+          <button (click)="1+1">Edit</button>
+          <button (click)="1+1">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
