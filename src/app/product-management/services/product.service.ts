@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class ProductService {
 
-private products: Product[] = [
+  private products: Product[] = [
     {
       ProductId: 1,
       productName: 'Laptop Dell',
@@ -22,12 +22,26 @@ private products: Product[] = [
     }
   ];
   constructor() { }
-  
-  getAll():Observable<Product[]>{
-      return of(this.products);
+
+  getAll(): Observable<Product[]> {
+    return of(this.products);
   }
 
-  create(product: Product){
+  create(product: Product): Observable<void> {
+    product.ProductId = Math.max(...this.products.map(x=>x.ProductId))+1;
     this.products.push(product);
+    return of();
+  }
+
+  update(product: Product): Observable<void> {
+    const index = this.products.findIndex(p => p.ProductId === product.ProductId);
+    if (index !== -1) {
+      this.products[index] = product;
+    }
+    return of();
+  }
+
+  delete(id: number) {
+    this.products = this.products.filter(x => x.ProductId !== id);
   }
 }
