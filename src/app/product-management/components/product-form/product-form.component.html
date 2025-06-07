@@ -1,10 +1,17 @@
 
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()" style="margin-bottom: 20px;">
+
+<div class="modal-content">
+  <span class="close" (click)="onCancel()">&times;</span>
+  <h3>{{ product.ProductId === 0 ? 'Add Product' : 'Edit Product' }}</h3>
+
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
   <input formControlName="productName" placeholder="Product Name" />
   <input formControlName="UnitPrice" type="number" placeholder="Unit Price" />
   <input formControlName="UnitsInStock" type="number" placeholder="Units In Stock" />
-  <button type="submit" [disabled]="productForm.invalid">
-    Add
-  </button>
+    <button type="submit" [disabled]="productForm.invalid">
+      {{ product.ProductId === 0 ? 'Create' : 'Update' }}
+    </button>
   <button type="button" (click)="onCancel()">Cancel</button>
 </form>
+
+</div>

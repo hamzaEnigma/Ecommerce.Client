@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProductFormComponent {
   @Input() product: Product = { ProductId: 0, productName: '', UnitPrice: 0, UnitsInStock: 0 };
-  @Output() save = new EventEmitter<Product>();
+  @Output() formSubmit = new EventEmitter<Product>();
   @Output() cancel = new EventEmitter<void>();
   productForm: FormGroup;
 
@@ -22,8 +22,17 @@ export class ProductFormComponent {
       UnitsInStock: [0, [Validators.required, Validators.min(0)]]
     });
   }
+
+  ngOnChanges() {
+    if (this.productForm) {
+      this.productForm.patchValue(this.product);
+    }
+  }
+  
   onSubmit() {
-    this.save.emit(this.productForm.value);
+    if (this.productForm.valid) {
+      this.formSubmit.emit(this.productForm.value);
+    }
   }
 
   onCancel() {

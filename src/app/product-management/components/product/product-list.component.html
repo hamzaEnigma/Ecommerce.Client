@@ -1,7 +1,13 @@
 <div class="container">
     <h2>Product Management</h2>
+<button (click)="openModal()">➕ Add Product</button>
 
-<app-product-form (save)="saveProduct($event)"></app-product-form>
+<div class="modal" [class.show]="showModal">
+  <app-product-form  *ngIf="selectedProduct"
+    [product]="selectedProduct"
+    (formSubmit)="handleFormSubmit($event)"
+    (cancel)="closeModal()"></app-product-form>
+</div>
 
 
    <table border="1" cellpadding="8" cellspacing="0" >
@@ -21,8 +27,8 @@
         <td>{{ product.UnitPrice  }}</td>
         <td>{{ product.UnitsInStock }}</td>
         <td>
-          <button (click)="1+1">Edit</button>
-          <button (click)="1+1">Delete</button>
+          <button (click)="openModal(product)">Edit</button>
+          <button (click)="deleteProduct(product.ProductId)">Delete</button>
         </td>
       </tr>
     </tbody>
