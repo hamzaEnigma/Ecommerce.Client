@@ -1,0 +1,69 @@
+.container {
+    margin:40px 20px;
+}
+
+h2 {
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+button {
+  margin: 8px 0;
+}
+
+.table-container {
+  margin-top: 16px;
+  overflow-x: auto;
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    margin: 40px 100px 50px;
+    min-width: 85%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+mat-header-cell, mat-cell {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+mat-header-row {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+mat-row:nth-child(even) {
+  background-color: #fafafa;
+}
+
+ul {
+  padding-left: 16px;
+  margin: 0;
+}
+th {
+    font-size: large;
+}
+tr{
+    font-size: medium;
+}
+mat-icon {
+  vertical-align: middle;
+}
+
+button[mat-icon-button] {
+  padding: 4px;
+}
+
+@media (max-width: 600px) {
+  table, mat-header-row, mat-row, mat-cell, mat-header-cell {
+    font-size: 16px;
+    padding: 8px;
+  }
+}
