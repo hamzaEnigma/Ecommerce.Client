@@ -1,7 +1,7 @@
 import { orderDetail } from "./order-detail.model";
 
-export class order {
-    OrderId?:number;
+export interface Order {
+    OrderId:number;
     OrderDate?:Date;
-    orderDetails:orderDetail[]= [];
+    orderDetails:orderDetail[];
 }
