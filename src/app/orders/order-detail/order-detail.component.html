@@ -1,0 +1,64 @@
+<div class="order-detail-card">
+  <h2>Order Detail</h2>
+  <mat-form-field appearance="outline">
+    <mat-label>Order ID</mat-label>
+    <input matInput [value]="order.OrderId" readonly />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Order Date</mat-label>
+    <input matInput [value]="order.OrderDate | date : 'shortDate'" readonly />
+  </mat-form-field>
+
+  <table
+    mat-table
+    [dataSource]="order.orderDetails"
+    class="mat-elevation-z2 mat-white-bg"
+  >
+    <!-- Product Column -->
+    <!-- <ng-container matColumnDef="ProductId">
+      <th mat-header-cell *matHeaderCellDef> Reference </th>
+      <td mat-cell *matCellDef="let d"> {{ d.ProductId || 'N/A' }} </td>
+    </ng-container> -->
+
+    <!-- Product Column -->
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef>Product</th>
+      <td mat-cell *matCellDef="let d">{{ d.product.productName || "N/A" }}</td>
+    </ng-container>
+
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let d">{{ d.Quantity }}</td>
+    </ng-container>
+
+    <!-- Discount Column -->
+    <ng-container matColumnDef="discount">
+      <th mat-header-cell *matHeaderCellDef>Discount</th>
+      <td mat-cell *matCellDef="let d">
+        {{ getFormattedDiscount(d?.Discount) }}
+      </td>
+    </ng-container>
+
+    <!-- Sale Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Sale Price</th>
+      <td mat-cell *matCellDef="let d">{{ getFormattedPrice(d.SalePrice) }}</td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="['product', 'quantity', 'discount', 'price']"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: ['product', 'quantity', 'discount', 'price']
+      "
+    ></tr>
+  </table>
+    <button mat-raised-button color="primary" routerLink="/orders" style="margin-top: 24px;">Back to Orders</button>
+
+</div>

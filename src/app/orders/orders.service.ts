@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class OrdersService {
-
+ selectedOrder: Order | undefined ; 
  private orders: Order[] = [
     {
       OrderId: 1,
@@ -50,4 +50,8 @@ export class OrdersService {
   getOrders():Observable<Order[]>{
     return of(this.orders);
   }
+
+  addOrder(order:Order):void {
+    this.orders.push(order);
+  } 
 }
