@@ -42,7 +42,7 @@ export class OrderFormComponent {
       ProductId: [null, Validators.required],
       Quantity: [1, Validators.required],
       Discount: [0],
-      SalePrice: [0, Validators.required],
+      SalePrice: [null, Validators.required],
       product: [null]
     }));
   }
