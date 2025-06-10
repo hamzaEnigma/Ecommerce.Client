@@ -31,8 +31,17 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Discount</mat-label>
-          <input matInput type="number" formControlName="Discount">
+          <mat-label>Discount %</mat-label>
+          <mat-select formControlName="Discount">
+            <mat-option [value]="0">0%</mat-option>
+            <mat-option [value]="0.05">5%</mat-option>
+            <mat-option [value]="0.10">10%</mat-option>
+            <mat-option [value]="0.15">15%</mat-option>
+            <mat-option [value]="0.20">20%</mat-option>
+          </mat-select>
+          <mat-error *ngIf="detail.get('Discount')?.hasError('min') || detail.get('Discount')?.hasError('max')">
+            Discount must be between 1% and 50%
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">

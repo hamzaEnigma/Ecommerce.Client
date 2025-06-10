@@ -12,13 +12,16 @@ export class ProductService {
       ProductId: 1,
       productName: 'Laptop Dell',
       UnitPrice: 1200,
-      UnitsInStock: 15
+      UnitsInStock: 15,
+      PurchasePrice : 100
     },
     {
       ProductId: 2,
       productName: 'Clavier Logitech',
       UnitPrice: 45,
-      UnitsInStock: 50
+      UnitsInStock: 50,
+      PurchasePrice : 150
+
     }
   ];
   constructor() { }

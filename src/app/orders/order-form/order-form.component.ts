@@ -9,42 +9,63 @@ import { OrdersService } from '../orders.service';
   selector: 'app-order-form',
   standalone: false,
   templateUrl: './order-form.component.html',
-  styleUrl: './order-form.component.css'
+  styleUrl: './order-form.component.css',
 })
 export class OrderFormComponent {
   orderForm!: FormGroup;
   products: Product[] = [];
 
-    constructor(
+  constructor(
     private fb: FormBuilder,
     private router: Router,
     private productService: ProductService,
     private orderService: OrdersService
   ) {}
 
-   ngOnInit(): void {
-    this.productService.getAll().subscribe(data=>{
+  ngOnInit(): void {
+    this.productService.getAll().subscribe((data) => {
       this.products = data;
     });
     this.orderForm = this.fb.group({
       OrderId: [this.generateId(), Validators.required],
       OrderDate: [new Date(), Validators.required],
-      orderDetails: this.fb.array([])
+      orderDetails: this.fb.array([]),
     });
   }
-   get orderDetails(): FormArray {
+  get orderDetails(): FormArray {
     return this.orderForm.get('orderDetails') as FormArray;
   }
 
   addDetail(): void {
-    this.orderDetails.push(this.fb.group({
+    const detailGroup = this.fb.group({
       OrderId: this.orderForm.get('OrderId')?.value,
       ProductId: [null, Validators.required],
       Quantity: [1, Validators.required],
-      Discount: [0],
-      SalePrice: [null, Validators.required],
-      product: [null]
-    }));
+      Discount: [0, [Validators.min(0.00), Validators.max(0.5)]],
+      SalePrice: [0, Validators.required],
+      product: [null as any],
+    });
+
+    // When product changes, auto-calculate SalePrice = PurchasePrice + 10%
+    detailGroup.get('ProductId')?.valueChanges.subscribe((productId) => {
+      const selectedProduct = this.products.find(
+        (p) => p.ProductId === productId
+      );
+      if (selectedProduct && selectedProduct.PurchasePrice) {
+        var salePrice = +(selectedProduct.PurchasePrice * 1.1).toFixed(2);
+        detailGroup.get('SalePrice')?.setValue(salePrice);
+        detailGroup.get('product')?.setValue(selectedProduct);
+        detailGroup.get('Discount')?.valueChanges.subscribe((discount) => {
+          if (typeof discount === 'number') {
+            const adjusted = +(salePrice * (1 - discount)).toFixed(2);
+            detailGroup.get('SalePrice')?.setValue(adjusted);
+          }
+        });
+      }
+    });
+    // listen to discount changes
+
+    this.orderDetails.push(detailGroup);
   }
 
   removeDetail(index: number): void {
@@ -52,15 +73,16 @@ export class OrderFormComponent {
   }
 
   submit(): void {
-    if(!this.orderForm.valid){
-      return ;
+    if (!this.orderForm.valid) {
+      return;
     }
     const order = this.orderForm.value;
     order.orderDetails.forEach((d: any) => {
-      d.product = this.products.find(p => p.ProductId === d.ProductId) || null;
+      d.product =
+        this.products.find((p) => p.ProductId === d.ProductId) || null;
     });
-    console.log('this is my form',this.orderForm.value);
-    
+    console.log('this is my form', this.orderForm.value);
+
     this.orderService.addOrder(order);
     this.router.navigate(['/orders']);
   }
@@ -69,12 +91,13 @@ export class OrderFormComponent {
     this.router.navigate(['/orders']);
   }
 
-    private generateId(): number {
-      var res: number =-1;
-    this.orderService.getOrders().subscribe(x=>{ 
-      const orders=x
-      const maxId = orders.length > 0 ? Math.max(...orders.map(o => o.OrderId)) : 0;
-      res =  maxId + 1;
+  private generateId(): number {
+    var res: number = -1;
+    this.orderService.getOrders().subscribe((x) => {
+      const orders = x;
+      const maxId =
+        orders.length > 0 ? Math.max(...orders.map((o) => o.OrderId)) : 0;
+      res = maxId + 1;
     });
     return res;
   }
