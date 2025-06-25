@@ -4,3 +4,40 @@ body {
 .container-app {
   margin: 80px;
 }
+.navbar {
+  background-color: #7d9efd; /* Bleu élégant */
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.nav-left a {
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-left a:hover {
+  color: #93c5fd; /* Bleu clair au survol */
+}
+
+.nav-button {
+  background-color: #7d9efd;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+  background-color: #2563eb;
+}
