@@ -1,36 +1,12 @@
-<div class="container">
-    <h2>Product Management</h2>
-<button (click)="openModal()">➕ Add Product</button>
+<div class="products">
 
-<div class="modal" [class.show]="showModal">
-  <app-product-form  *ngIf="selectedProduct"
-    [product]="selectedProduct"
-    (formSubmit)="handleFormSubmit($event)"
-    (cancel)="closeModal()"></app-product-form>
-</div>
+  <input [formControl]="searchProductFormControl" placeholder="search product" /> 
+  @let searchResult = filteredProducts$ | async;
+  <div>Nombre de résultats: {{ searchResult?.length }} </div>
+  <ul>
+    @for(p of searchResult; track p) {
+    <li (click)="selectProduct(p)">{{ p.productName }}  - {{ p.unitsInStock }} piéces  </li>
+    }
+  </ul>
 
-
-   <table border="1" cellpadding="8" cellspacing="0" >
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Product Name</th>
-        <th>Unit Price</th>
-        <th>Units In Stock</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.ProductId }}</td>
-        <td>{{ product.productName }}</td>
-        <td>{{ product.UnitPrice  }}</td>
-        <td>{{ product.UnitsInStock }}</td>
-        <td>
-          <button (click)="openModal(product)">Edit</button>
-          <button (click)="deleteProduct(product.ProductId)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>

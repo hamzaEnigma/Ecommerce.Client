@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent {
-  @Input() product: Product = { ProductId: 0, productName: '', UnitPrice: 0, UnitsInStock: 0 };
+  @Input() product: Product = { ProductId: 0, productName: '', UnitPrice: 0, unitsInStock: 0 };
   @Output() formSubmit = new EventEmitter<Product>();
   @Output() cancel = new EventEmitter<void>();
   productForm: FormGroup;

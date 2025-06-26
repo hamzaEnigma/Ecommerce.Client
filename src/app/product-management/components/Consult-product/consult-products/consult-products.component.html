@@ -1,0 +1,14 @@
+
+<h2>Product Management</h2>
+<div class="consult">
+<div class="list card">
+   <app-product-list> </app-product-list>
+</div>
+<div class="details card">
+     <ul>
+    
+    <li *ngIf="selectedProduct">{{ selectedProduct.productName }}  - {{ selectedProduct.UnitPrice }} piéces  </li>
+    
+  </ul>
+</div>
+</div>

@@ -51,8 +51,8 @@ export class OrderFormComponent {
       const selectedProduct = this.products.find(
         (p) => p.ProductId === productId
       );
-      if (selectedProduct && selectedProduct.PurchasePrice) {
-        var salePrice = +(selectedProduct.PurchasePrice * 1.1).toFixed(2);
+      if (selectedProduct && selectedProduct.purchasePrice) {
+        var salePrice = +(selectedProduct.purchasePrice * 1.1).toFixed(2);
         detailGroup.get('SalePrice')?.setValue(salePrice);
         detailGroup.get('product')?.setValue(selectedProduct);
         detailGroup.get('Discount')?.valueChanges.subscribe((discount) => {

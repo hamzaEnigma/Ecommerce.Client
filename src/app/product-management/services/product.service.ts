@@ -1,33 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
+  private apiUrl ='https://localhost:7228/api/Product/';
+  selectedProduct: Product | null = null;
   private products: Product[] = [
     {
       ProductId: 1,
       productName: 'Laptop Dell',
       UnitPrice: 1200,
-      UnitsInStock: 15,
-      PurchasePrice : 100
+      unitsInStock: 15,
+      purchasePrice : 100
     },
     {
       ProductId: 2,
       productName: 'Clavier Logitech',
       UnitPrice: 45,
-      UnitsInStock: 50,
-      PurchasePrice : 150
+      unitsInStock: 50,
+      purchasePrice : 150
 
     }
   ];
-  constructor() { }
+
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<Product[]> {
-    return of(this.products);
+    return this.http.get<Product[]>(this.apiUrl+'GetAll');
   }
 
   create(product: Product): Observable<void> {

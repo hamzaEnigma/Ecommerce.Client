@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Order } from './models/order.model';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
- selectedOrder: Order | undefined ; 
+ selectedOrder: Order | undefined ;
+ private apiUrl = 'https://localhost:7228/api/Order';
+ 
  private orders: Order[] = [
     {
       OrderId: 1,
@@ -18,7 +21,7 @@ export class OrdersService {
           Quantity: 3,
           Discount: 0.1,
           SalePrice: 20,
-          product: { ProductId: 1, productName: 'Pavlova', categoryId: 1, PurchasePrice: 20 }
+          product: { ProductId: 1, productName: 'Pavlova', categoryId: 1, purchasePrice: 20 }
         },
         {
           OrderId: 1,
@@ -26,7 +29,7 @@ export class OrdersService {
           Quantity: 3,
           Discount: 0,
           SalePrice: 15,
-          product: { ProductId: 2, productName: 'Chai', categoryId: 1, PurchasePrice: 15 }
+          product: { ProductId: 2, productName: 'Chai', categoryId: 1, purchasePrice: 15 }
         }
       ]
     },
@@ -40,15 +43,15 @@ export class OrdersService {
           Quantity: 5,
           Discount: 0,
           SalePrice: 17.5,
-          product: { ProductId: 3, productName: 'Tofu', categoryId: 2, PurchasePrice: 17.5 }
+          product: { ProductId: 3, productName: 'Tofu', categoryId: 2, purchasePrice: 17.5 }
         }
       ]
     }
   ];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getOrders():Observable<Order[]>{
-    return of(this.orders);
+    return this.http.get<Order[]>(this.apiUrl+'/GetAll');
   }
 
   addOrder(order:Order):void {
