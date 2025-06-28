@@ -4,32 +4,10 @@
     <hr>
     <app-product-list (selectProductEvent)="handleSelectProduct($event)"> </app-product-list>
   </div>
-
   <div class="productCard" *ngIf="selectedProduct">
-    <h2>Détails du produit</h2>
-    <div class="product-details">
-      <!-- image à gauche  -->
-      <div class="product-image">
-        <img *ngIf="selectedProduct.category?.picture; else noImage" [src]="selectedProduct.category?.picture"
-          alt="Image produit" />
-        <ng-template #noImage>
-          <div class="image-placeholder">Aucune image</div>
-        </ng-template>
-      </div>
-      <!-- info  à droite  -->
-      <div class="product-info">
-        <p><strong>Reference :</strong> {{ selectedProduct.productId }}</p>
-        <p><strong>Nom :</strong> {{ selectedProduct.productName }}</p>
-        <p><strong>Prix de vente :</strong> {{ selectedProduct.unitPrice || 'Non défini' }} €</p>
-        <p><strong>Prix d’achat :</strong> {{ selectedProduct.purchasePrice || 'Non défini' }} €</p>
-        <p><strong>Stock :</strong> {{ selectedProduct.unitsInStock || 'Non défini' }}</p>
-      </div>
-    </div>
-    <div class="category-section" *ngIf="selectedProduct.category">
-      <h3>Catégorie</h3>
-      <p><strong>Nom :</strong> {{ selectedProduct.category.categoryName }}</p>
-      <p><strong>Description :</strong> {{ selectedProduct.category.description }}</p>
-      <img *ngIf="selectedProduct.category.picture" [src]="selectedProduct.category.picture" alt="Image Catégorie" />
-    </div>
+    <!-- <h2>Détails du produit</h2> -->
+    <app-product-detail [selectedProduct]="selectedProduct">
+    </app-product-detail>
   </div>
+
 </div>

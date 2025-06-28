@@ -6,13 +6,14 @@ import { ProductListComponent } from './components/product/product-list.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { ConsultProductsComponent } from './components/Consult-product/consult-products/consult-products.component';
+import { ProductDetailComponent } from './components/Consult-product/product-detail/product-detail.component';
 
 const routes: Routes = [
   { path: '',  }
 ];
 
 @NgModule({
-  declarations: [ProductListComponent, ProductFormComponent, ConsultProductsComponent],
+  declarations: [ProductListComponent, ProductFormComponent, ConsultProductsComponent, ProductDetailComponent],
   imports: [
     CommonModule,
     FormsModule,
