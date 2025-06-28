@@ -14,10 +14,10 @@
       <div *ngFor="let detail of orderDetails.controls; let i = index" [formGroupName]="i" class="order-detail-row">
         <mat-form-field appearance="outline">
           <mat-label>Product</mat-label>
-          <mat-select formControlName="ProductId">
-            <mat-option *ngFor="let p of products" [value]="p.ProductId">{{ p.productName }}</mat-option>
+          <mat-select formControlName="productId">
+            <mat-option *ngFor="let p of products" [value]="p.productId">{{ p.productName }}</mat-option>
           </mat-select>
-          <mat-error *ngIf="detail.get('ProductId')?.invalid && detail.get('ProductId')?.touched">
+          <mat-error *ngIf="detail.get('productId')?.invalid && detail.get('productId')?.touched">
             Product is required
           </mat-error>
         </mat-form-field>

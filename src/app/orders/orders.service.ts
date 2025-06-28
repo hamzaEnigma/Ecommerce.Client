@@ -17,19 +17,19 @@ export class OrdersService {
       orderDetails: [
         {
           OrderId: 1,
-          ProductId: 1,
+          productId: 1,
           Quantity: 3,
           Discount: 0.1,
           SalePrice: 20,
-          product: { ProductId: 1, productName: 'Pavlova', categoryId: 1, purchasePrice: 20 }
+          product: { productId: 1, productName: 'Pavlova', categoryId: 1, purchasePrice: 20 }
         },
         {
           OrderId: 1,
-          ProductId: 2,
+          productId: 2,
           Quantity: 3,
           Discount: 0,
           SalePrice: 15,
-          product: { ProductId: 2, productName: 'Chai', categoryId: 1, purchasePrice: 15 }
+          product: { productId: 2, productName: 'Chai', categoryId: 1, purchasePrice: 15 }
         }
       ]
     },
@@ -39,11 +39,11 @@ export class OrdersService {
       orderDetails: [
         {
           OrderId: 2,
-          ProductId: 3,
+          productId: 3,
           Quantity: 5,
           Discount: 0,
           SalePrice: 17.5,
-          product: { ProductId: 3, productName: 'Tofu', categoryId: 2, purchasePrice: 17.5 }
+          product: { productId: 3, productName: 'Tofu', categoryId: 2, purchasePrice: 17.5 }
         }
       ]
     }

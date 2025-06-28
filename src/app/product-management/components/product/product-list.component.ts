@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { FormControl } from '@angular/forms';
@@ -11,8 +11,8 @@ import { debounceTime, Observable, of, startWith, switchMap } from 'rxjs';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
+  @Output() selectProductEvent = new EventEmitter<number>();
   products: Product[] = [];
-  selectedProduct: Product | null = null;
   searchProductFormControl:FormControl = new FormControl<string>('');
   filteredProducts$ : Observable<Product[]> = this.searchProductFormControl.valueChanges.pipe(
     startWith(''),
@@ -22,9 +22,11 @@ export class ProductListComponent {
       return this.search(searchData)
     })
   )
-
+  isActive = true;
   showModal = false;
-
+  get selectedProduct() {
+    return this.productService.selectedProduct;
+  }
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -53,18 +55,18 @@ export class ProductListComponent {
   }
 
   openModal(product?: Product): void {
-    this.selectedProduct = product ? { ...product } : { ProductId: 0, productName: '', UnitPrice: 0, unitsInStock: 0 };
+    //this.selectedProduct = product ? { ...product } : { productId: 0, productName: '', unitPrice: 0, unitsInStock: 0 };
     this.showModal = true;
   }
 
   closeModal(): void {
     console.log('closing ...');
     this.showModal = false;
-    this.selectedProduct = null;
+    //this.selectedProduct = null;
   }
 
   handleFormSubmit(product: Product): void {
-    const obs = product.ProductId === 0
+    const obs = product.productId === 0
       ? this.productService.create(product)
       : this.productService.update(product);
     console.log('obs', obs);
@@ -83,9 +85,9 @@ export class ProductListComponent {
 
   selectProduct(event$:Product){
     if(event$){
-    this.productService.selectedProduct = event$ 
-      console.log('seleceted',this.productService.selectedProduct);
-      
+    this.productService.selectedProduct = event$
+    const productId = this.productService.selectedProduct.productId;
+    this.selectProductEvent.emit(productId)     
     }
   }
 }

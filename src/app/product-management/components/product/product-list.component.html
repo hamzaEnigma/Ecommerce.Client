@@ -2,11 +2,13 @@
 
   <input [formControl]="searchProductFormControl" placeholder="search product" /> 
   @let searchResult = filteredProducts$ | async;
+  @let productSelected = selectedProduct;
   <div>Nombre de résultats: {{ searchResult?.length }} </div>
-  <ul>
-    @for(p of searchResult; track p) {
-    <li (click)="selectProduct(p)">{{ p.productName }}  - {{ p.unitsInStock }} piéces  </li>
-    }
-  </ul>
-
+  <div class="list">
+    <ul>
+      @for(p of searchResult; track p) {
+      <li [class]="(p.productId === productSelected?.productId) ? 'active' : '' "	 (click)="selectProduct(p)">{{ p.productName }}  - {{ p.unitsInStock }} piéces  </li>
+      }
+    </ul>
+</div>
 </div>

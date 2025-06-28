@@ -15,5 +15,10 @@ get selectedProduct() {
 
 constructor(private productService: ProductService) { }
 
+handleSelectProduct(productid: number){
+    this.productService.getProductById(productid).subscribe(product =>{
+      this.productService.selectedProduct = product;
+    })
+}
 
 }

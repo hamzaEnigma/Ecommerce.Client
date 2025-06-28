@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, output, Output } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -9,14 +9,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent {
-  @Input() product: Product = { ProductId: 0, productName: '', UnitPrice: 0, unitsInStock: 0 };
+  @Input() product: Product = { productId: 0, productName: '', unitPrice: 0, unitsInStock: 0 };
   @Output() formSubmit = new EventEmitter<Product>();
   @Output() cancel = new EventEmitter<void>();
   productForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.productForm = this.fb.group({
-      ProductId: [null],
+      productId: [null],
       productName: ['', Validators.required],
       UnitPrice: [0, [Validators.required, Validators.min(0)]],
       UnitsInStock: [0, [Validators.required, Validators.min(0)]]

@@ -11,16 +11,16 @@ export class ProductService {
   selectedProduct: Product | null = null;
   private products: Product[] = [
     {
-      ProductId: 1,
+      productId: 1,
       productName: 'Laptop Dell',
-      UnitPrice: 1200,
+      unitPrice: 1200,
       unitsInStock: 15,
       purchasePrice : 100
     },
     {
-      ProductId: 2,
+      productId: 2,
       productName: 'Clavier Logitech',
-      UnitPrice: 45,
+      unitPrice: 45,
       unitsInStock: 50,
       purchasePrice : 150
 
@@ -33,14 +33,18 @@ export class ProductService {
     return this.http.get<Product[]>(this.apiUrl+'GetAll');
   }
 
+  getProductById(id:number): Observable<Product> {
+    return this.http.get<Product>(this.apiUrl+id+'?includeCategory=true');
+  }
+
   create(product: Product): Observable<void> {
-    product.ProductId = Math.max(...this.products.map(x=>x.ProductId))+1;
+    product.productId = Math.max(...this.products.map(x=>x.productId))+1;
     this.products.push(product);
     return of();
   }
 
   update(product: Product): Observable<void> {
-    const index = this.products.findIndex(p => p.ProductId === product.ProductId);
+    const index = this.products.findIndex(p => p.productId === product.productId);
     if (index !== -1) {
       this.products[index] = product;
     }
@@ -48,6 +52,6 @@ export class ProductService {
   }
 
   delete(id: number) {
-    this.products = this.products.filter(x => x.ProductId !== id);
+    this.products = this.products.filter(x => x.productId !== id);
   }
 }

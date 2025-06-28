@@ -1,7 +1,18 @@
-.products{
-    margin:1% 1%;
+.active{
+	background: #3a6dff;
+	color: white;
 }
 
+.list {
+    max-height: 500px;
+    overflow-x: auto;
+	margin: 5px 0px;
+}
+
+hr {
+	width: 92%;
+    margin-left: 2px;
+}
 
 ul {
 	list-style-type: none;
@@ -19,7 +30,7 @@ li {
 }
 
 li:hover {
-	background: #e0e0e0;
+	background: #3a6dff;;
 }
 
 input {

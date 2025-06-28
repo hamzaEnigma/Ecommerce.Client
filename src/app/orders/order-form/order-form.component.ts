@@ -39,7 +39,7 @@ export class OrderFormComponent {
   addDetail(): void {
     const detailGroup = this.fb.group({
       OrderId: this.orderForm.get('OrderId')?.value,
-      ProductId: [null, Validators.required],
+      productId: [null, Validators.required],
       Quantity: [1, Validators.required],
       Discount: [0, [Validators.min(0.00), Validators.max(0.5)]],
       SalePrice: [0, Validators.required],
@@ -47,9 +47,9 @@ export class OrderFormComponent {
     });
 
     // When product changes, auto-calculate SalePrice = PurchasePrice + 10%
-    detailGroup.get('ProductId')?.valueChanges.subscribe((productId) => {
+    detailGroup.get('productId')?.valueChanges.subscribe((productId) => {
       const selectedProduct = this.products.find(
-        (p) => p.ProductId === productId
+        (p) => p.productId === productId
       );
       if (selectedProduct && selectedProduct.purchasePrice) {
         var salePrice = +(selectedProduct.purchasePrice * 1.1).toFixed(2);
@@ -79,7 +79,7 @@ export class OrderFormComponent {
     const order = this.orderForm.value;
     order.orderDetails.forEach((d: any) => {
       d.product =
-        this.products.find((p) => p.ProductId === d.ProductId) || null;
+        this.products.find((p) => p.productId === d.productId) || null;
     });
     console.log('this is my form', this.orderForm.value);
 
