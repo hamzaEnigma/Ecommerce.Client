@@ -1,13 +1,14 @@
 <div class="consult">
+
   <div class="list card">
     <h2>Products list</h2>
     <hr>
     <app-product-list (selectProductEvent)="handleSelectProduct($event)"> </app-product-list>
   </div>
+
   <div class="productCard" *ngIf="selectedProduct">
-    <!-- <h2>Détails du produit</h2> -->
     <app-product-detail [selectedProduct]="selectedProduct">
     </app-product-detail>
   </div>
-
+  
 </div>

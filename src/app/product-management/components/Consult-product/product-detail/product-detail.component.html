@@ -16,12 +16,14 @@
     </div>
     <!-- info  à droite  -->
     <div class="product-info">
+        <h3>Produit</h3>
         <p><strong>Reference :</strong> {{ selectedProduct.productId }}</p>
         <p><strong>Nom :</strong> {{ selectedProduct.productName }}</p>
         <p><strong>Prix de vente :</strong> {{ selectedProduct.unitPrice || 'Non défini' }} €</p>
         <p><strong>Prix d’achat :</strong> {{ selectedProduct.purchasePrice || 'Non défini' }} €</p>
         <p><strong>Stock :</strong> {{ selectedProduct.unitsInStock || 'Non défini' }}</p>
     </div>
+
 </div>
 <div class="category-section" *ngIf="selectedProduct && selectedProduct.category">
     <h3>Catégorie</h3>
@@ -29,3 +31,11 @@
     <p><strong>Description :</strong> {{ selectedProduct.category.description }}</p>
     <img *ngIf="selectedProduct.category.picture" [src]="selectedProduct.category.picture" alt="Image Catégorie" />
 </div>
+        <div class="cart-section">
+            <form (ngSubmit)="addToCart()" #cartForm="ngForm">
+                <label for="quantity"><strong>Quantité :</strong></label>
+                <input type="number" id="quantity" name="quantity" min="1" [(ngModel)]="quantity" required />
+
+                <button type="submit" [disabled]="!cartForm.valid">Ajouter au panier</button>
+            </form>
+        </div>
