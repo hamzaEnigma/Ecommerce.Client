@@ -10,5 +10,11 @@
     <app-product-detail [selectedProduct]="selectedProduct">
     </app-product-detail>
   </div>
-  
+
+  <div class="list cartItems card" *ngIf="selectedProduct">
+    <h2>Panier</h2>
+    <hr>
+    <app-cart-detail></app-cart-detail>
+  </div>
+
 </div>
