@@ -1,5 +1,7 @@
 import { Component, Input, input } from '@angular/core';
 import { Product } from '../../../models/product.model';
+import { orderDetail } from '../../../../orders/models/order-detail.model';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -8,16 +10,22 @@ import { Product } from '../../../models/product.model';
   styleUrl: './product-detail.component.css'
 })
 export class ProductDetailComponent {
-    @Input() selectedProduct:Product | null = null;
+@Input() selectedProduct:Product | undefined = undefined;
 quantity: number = 1;
 addedToCart: boolean = false;
 
+constructor(private productService: ProductService) {  
+}
 addToCart(): void {
-  // Ici tu peux appeler un service Panier, par exemple
   console.log(`Produit ID ${this.selectedProduct?.productId} ajouté avec quantité ${this.quantity}`);
+  const order:orderDetail = {
+    product: this.selectedProduct,
+    OrderId: undefined,
+    productId: this.selectedProduct?.productId,
+    Quantity: this.quantity,
+    SalePrice: 0
+  }
   this.addedToCart = true;
-
-  // Optionnel : réinitialiser le message après 2s
-  setTimeout(() => this.addedToCart = false, 2000);
+  this.productService.setPanier(order);
 }
 }

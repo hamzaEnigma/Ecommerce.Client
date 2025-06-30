@@ -2,15 +2,15 @@
         <h3>PANIER <span>5 ARTICLE(S)</span></h3>
         <ul class="item-list">
           <li>
-            <div class="item-qty">2 ×</div>
+            <div class="item-qty">{{currentOrder?.Quantity}} ×</div>
 
             <div class="item-info">
-              <p><strong>MF XL BICOLOR BLEU VERT</strong> </p>
-              <p class="ref">Ref : 4597059</p>
+              <p><strong>{{currentOrder?.product?.productName?.toUpperCase()}}</strong> </p>
+              <p class="ref">Ref : {{currentOrder?.productId}}</p>
             </div>
 
             <div class="item-price">
-              <span>11.99€</span>
+              <span>{{currentOrder?.product?.purchasePrice}}€</span>
               <button class="delete-btn">🗑</button>
             </div>
           </li>

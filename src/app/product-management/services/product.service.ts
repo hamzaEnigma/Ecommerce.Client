@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { orderDetail } from '../../orders/models/order-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 export class ProductService {
   private apiUrl ='https://localhost:7228/api/Product/';
   selectedProduct: Product | null = null;
+  private panierSource= new BehaviorSubject<orderDetail | undefined>(undefined);
+  currentPanier$ = this.panierSource.asObservable();
   private products: Product[] = [
     {
       productId: 1,
@@ -53,5 +56,9 @@ export class ProductService {
 
   delete(id: number) {
     this.products = this.products.filter(x => x.productId !== id);
+  }
+
+  setPanier(orderDetail:orderDetail){
+    this.panierSource.next(orderDetail); 
   }
 }
