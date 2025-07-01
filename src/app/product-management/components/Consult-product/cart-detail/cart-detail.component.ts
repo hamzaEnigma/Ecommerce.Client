@@ -12,14 +12,32 @@ import { orderDetail } from '../../../../orders/models/order-detail.model';
   styleUrl: './cart-detail.component.css'
 })
 export class CartDetailComponent  implements OnInit{
-  currentOrder:orderDetail | undefined;
+  orderDetails:orderDetail [] = [];
+  totalSum : number = 0;
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.currentPanier$.pipe(
-      tap((data)=>this.currentOrder = data),
-      finalize(() => console.log('data enregistré')
+      tap((data)=>{
+        if (data){
+        const currentOrder = data
+        this.orderDetails?.push(currentOrder);
+        const price =  currentOrder.product?.purchasePrice ?? 0
+        this.totalSum += price * currentOrder.Quantity;
+        }
+      }),
+      finalize(() => console.log('data enregistré',this.orderDetails)
     )).subscribe();
+  }
+
+  deleteLine(index: number){ 
+    const currentPrice = this.orderDetails[index].product?.purchasePrice ?? 0;
+    this.totalSum -= currentPrice *  this.orderDetails[index].Quantity;
+    this.orderDetails.splice(index,1);
+  }
+
+  getTotal():string{
+    return Math.abs(this.totalSum).toFixed(2);
   }
  
 }

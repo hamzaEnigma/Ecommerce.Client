@@ -1,23 +1,26 @@
       <div class="cart">
-        <h3>PANIER <span>5 ARTICLE(S)</span></h3>
+        @let listDetails = orderDetails;
+        <h3><span>{{listDetails.length}} ARTICLE(S)</span></h3>
+        @for (item of listDetails; track item;  let  i = $index ) {
         <ul class="item-list">
           <li>
-            <div class="item-qty">{{currentOrder?.Quantity}} ×</div>
+            <div class="item-qty">{{item?.Quantity}} ×</div>
 
             <div class="item-info">
-              <p><strong>{{currentOrder?.product?.productName?.toUpperCase()}}</strong> </p>
-              <p class="ref">Ref : {{currentOrder?.productId}}</p>
+              <p><strong>{{item?.product?.productName?.toUpperCase()}}</strong> </p>
+              <p class="ref">Ref : {{item?.productId}}</p>
             </div>
 
             <div class="item-price">
-              <span>{{currentOrder?.product?.purchasePrice}}€</span>
-              <button class="delete-btn">🗑</button>
+              <span>{{item?.product?.purchasePrice}}€</span>
+              <button class="delete-btn" (click)="deleteLine(i)">🗑</button>
             </div>
           </li>
         </ul>
+        }
         <div class="total">
           <span>Total</span>
-          <strong>104.95€</strong>
+          <strong>{{ getTotal() }}</strong>
         </div>
 
 

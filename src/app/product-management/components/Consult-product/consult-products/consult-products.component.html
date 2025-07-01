@@ -6,10 +6,13 @@
     <app-product-list (selectProductEvent)="handleSelectProduct($event)"> </app-product-list>
   </div>
 
-  <div class="productCard" *ngIf="selectedProduct">
-    <app-product-detail [selectedProduct]="selectedProduct">
+  <div class="list card">
+    <h2>Product Detail</h2>
+    <hr>
+    <app-product-detail *ngIf="selectedProduct" [selectedProduct]="selectedProduct">
     </app-product-detail>
-  </div>
+ </div>
+
 
   <div class="list cartItems card" *ngIf="selectedProduct">
     <h2>Panier</h2>
