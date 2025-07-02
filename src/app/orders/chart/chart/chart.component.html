@@ -1,0 +1,27 @@
+<div class="cart">
+  @let listDetails = orderDetails;
+  <h3><span>{{ listDetails.length }} ARTICLE(S)</span></h3>
+
+  <table class="item-table">
+    <tbody>
+      @for (item of listDetails; track item; let i = $index) {
+        <tr>
+          <td class="item-qty">{{ item?.Quantity }} ×</td>
+          <td class="item-info">
+            <p><strong>{{ item?.product?.productName?.toUpperCase() }}</strong></p>
+            <p class="ref">Ref : {{ item?.productId }}</p>
+          </td>
+          <td class="item-price">
+            <span>{{ item?.product?.purchasePrice }}€</span>
+            <button class="delete-btn" (click)="deleteLine(i)">🗑</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="total">
+    <span>Total</span>
+    <strong>{{ getTotal() }}</strong>
+  </div>
+</div>

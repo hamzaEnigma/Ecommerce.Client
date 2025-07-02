@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Order } from './models/order.model';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { orderDetail } from './models/order-detail.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
  selectedOrder: Order | undefined ;
+ cartItemsSubject = new BehaviorSubject<orderDetail[]>([]);
+ cartItems$ = this.cartItemsSubject.asObservable();
+
+ totalSubject = new BehaviorSubject<number | undefined> (0);
+ total$ = this.totalSubject.asObservable();
  private apiUrl = 'https://localhost:7228/api/Order';
  
  private orders: Order[] = [
@@ -56,5 +62,29 @@ export class OrdersService {
 
   addOrder(order:Order):void {
     this.orders.push(order);
-  } 
+  }
+
+  getCartItems():orderDetail[]{
+    return this.cartItemsSubject.value;
+  }
+
+  setCartItems(items: orderDetail[]){
+    this.cartItemsSubject.next([...items]);
+  }
+
+  clearCart() {
+    this.cartItemsSubject.next([]);
+  }
+
+  addToChart(item:orderDetail){
+    const currentDetails = [...this.getCartItems(),item];
+    this.cartItemsSubject.next(currentDetails);
+    this.updateTotal(currentDetails);
+  }
+
+  updateTotal(items:orderDetail[]){
+    const total = items.reduce((sumTotal,item)=> sumTotal += (item.product?.purchasePrice ?? 0) * item.Quantity,0);
+    this.totalSubject.next(total);
+  }
+  
 }

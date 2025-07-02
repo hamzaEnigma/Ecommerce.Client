@@ -13,13 +13,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ChartComponent } from './chart/chart/chart.component';
 
 
 @NgModule({
   declarations: [
     OrdersListComponent,
     OrderFormComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
+    ChartComponent
   ],
   imports: [
     CommonModule,

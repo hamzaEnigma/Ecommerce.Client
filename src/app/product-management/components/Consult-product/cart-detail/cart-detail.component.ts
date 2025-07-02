@@ -1,43 +1,37 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Product } from '../../../models/product.model';
-import { FormControl } from '@angular/forms';
-import { debounceTime, finalize, Observable, of, startWith, switchMap, tap } from 'rxjs';
-import { ProductService } from '../../../services/product.service';
+import { Component, OnInit } from '@angular/core';
+import {filter} from 'rxjs';
 import { orderDetail } from '../../../../orders/models/order-detail.model';
+import { OrdersService } from '../../../../orders/orders.service';
 
 @Component({
   selector: 'app-cart-detail',
   standalone: false,
   templateUrl: './cart-detail.component.html',
-  styleUrl: './cart-detail.component.css'
+  styleUrl: './cart-detail.component.css',
 })
-export class CartDetailComponent  implements OnInit{
-  orderDetails:orderDetail [] = [];
-  totalSum : number = 0;
-  constructor(private productService: ProductService) { }
+export class CartDetailComponent implements OnInit {
+  orderDetails: orderDetail[] = [];
+  totalSum: number = 0;
+
+  constructor(private orderService: OrdersService) {}
 
   ngOnInit(): void {
-    this.productService.currentPanier$.pipe(
-      tap((data)=>{
-        if (data){
-        const currentOrder = data
-        this.orderDetails?.push(currentOrder);
-        const price =  currentOrder.product?.purchasePrice ?? 0
-        this.totalSum += price * currentOrder.Quantity;
-        }
-      }),
-      finalize(() => console.log('data enregistré',this.orderDetails)
-    )).subscribe();
+    // Restore saved cart
+    this.orderService.cartItemsSubject.subscribe(
+      (items) => (this.orderDetails = items)
+    );
+    this.orderService.totalSubject
+      .pipe(filter((x) => x != undefined))
+      .subscribe((total) => (this.totalSum = total));
   }
 
-  deleteLine(index: number){ 
-    const currentPrice = this.orderDetails[index].product?.purchasePrice ?? 0;
-    this.totalSum -= currentPrice *  this.orderDetails[index].Quantity;
-    this.orderDetails.splice(index,1);
+  deleteLine(index: number) {
+    this.orderDetails.splice(index, 1);
+    this.orderService.setCartItems(this.orderDetails);
+    this.orderService.updateTotal(this.orderDetails);
   }
 
-  getTotal():string{
+  getTotal(): string {
     return Math.abs(this.totalSum).toFixed(2);
   }
- 
 }

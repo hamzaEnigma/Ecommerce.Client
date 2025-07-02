@@ -1,7 +1,7 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Product } from '../../../models/product.model';
 import { orderDetail } from '../../../../orders/models/order-detail.model';
-import { ProductService } from '../../../services/product.service';
+import { OrdersService } from '../../../../orders/orders.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -12,9 +12,8 @@ import { ProductService } from '../../../services/product.service';
 export class ProductDetailComponent {
 @Input() selectedProduct:Product | undefined = undefined;
 quantity: number = 1;
-addedToCart: boolean = false;
 
-constructor(private productService: ProductService) {  
+constructor(private orderService:OrdersService) {  
 }
 addToCart(): void {
   console.log(`Produit ID ${this.selectedProduct?.productId} ajouté avec quantité ${this.quantity}`);
@@ -25,7 +24,6 @@ addToCart(): void {
     Quantity: this.quantity,
     SalePrice: 0
   }
-  this.addedToCart = true;
-  this.productService.setPanier(order);
+  this.orderService.addToChart(order);
 }
 }
