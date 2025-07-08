@@ -87,4 +87,7 @@ export class OrdersService {
     this.totalSubject.next(total);
   }
   
+  setQuntity(item:orderDetail, quantity:number){
+    item.Quantity = quantity;
+  }
 }

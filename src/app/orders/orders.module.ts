@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -26,6 +26,7 @@ import { ChartComponent } from './chart/chart/chart.component';
   imports: [
     CommonModule,
     OrdersRoutingModule,
+    FormsModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
