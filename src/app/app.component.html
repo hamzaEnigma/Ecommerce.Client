@@ -6,7 +6,8 @@
     <a routerLink="/orders">ORDERS</a>
     <a routerLink="/a-propos">À PROPOS</a>
   </div>
-  <button class="nav-button">Se connecter</button>
+  @let count = PanierCountSignal();
+  <button class="nav-button">Panier : {{count}}</button>
 </nav>
 <div class="container-app">
 <router-outlet></router-outlet>

@@ -27,7 +27,7 @@ export class ChartComponent {
   }
 
   getTotal(): string {
-    return Math.abs(this.totalSum?? 0).toFixed(2);
+    return Math.abs(this.totalSum?? 0).toFixed(1);
   }
 
   changeQuantityEvent(item:orderDetail){

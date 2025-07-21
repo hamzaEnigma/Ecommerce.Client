@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Order } from './models/order.model';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +14,7 @@ export class OrdersService {
 
  totalSubject = new BehaviorSubject<number | undefined> (0);
  total$ = this.totalSubject.asObservable();
+ panierCount = signal(0);
  private apiUrl = 'https://localhost:7228/api/Order';
  
  private orders: Order[] = [
@@ -77,9 +78,19 @@ export class OrdersService {
   }
 
   addToChart(item:orderDetail){
-    const currentDetails = [...this.getCartItems(),item];
-    this.cartItemsSubject.next(currentDetails);
-    this.updateTotal(currentDetails);
+  const cartItems = [...this.getCartItems()];
+  const existingIndex = cartItems.findIndex(i => i.productId === item.productId);
+
+  if (existingIndex !== -1) {
+    // Update quantity and price if needed
+    cartItems[existingIndex].Quantity += item.Quantity;
+    // Optionally update SalePrice or Discount if needed here
+  } else {
+    cartItems.push(item);
+  }
+
+  this.cartItemsSubject.next(cartItems);
+  this.updateTotal(cartItems);
   }
 
   updateTotal(items:orderDetail[]){
@@ -90,4 +101,6 @@ export class OrdersService {
   setQuntity(item:orderDetail, quantity:number){
     item.Quantity = quantity;
   }
+
+
 }
